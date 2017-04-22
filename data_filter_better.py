@@ -14,28 +14,13 @@ def sheet_filter(sheet_ranges, ws):
         ws.append(row)
     return ws
 
-
-wb = load_workbook(filename = 'filter.xlsx')
+filename = 'filter'
+wb = load_workbook('.'.join([filename,'xlsx']))
 output = Workbook(write_only=True)
 
-
-sheet_ranges = wb['sub27_n']
-ws = output.create_sheet('sub27_n')
-sheet_filter(sheet_ranges, ws)
-
-
-sheet_ranges = wb['sub27_p']
-ws = output.create_sheet('sub27_p')
-sheet_filter(sheet_ranges, ws)
-
-
-sheet_ranges = wb['17-18_n']
-ws = output.create_sheet('17-18_n')
-sheet_filter(sheet_ranges, ws)
-
-
-sheet_ranges = wb['17-18_p']
-ws = output.create_sheet('17-18_p')
-sheet_filter(sheet_ranges, ws)
+for sheet_name in wb.get_sheet_names():
+    sheet_ranges = wb[sheet_name]
+    ws = output.create_sheet(sheet_name)
+    sheet_filter(sheet_ranges, ws)
 
 output.save('filter_output.xlsx')
